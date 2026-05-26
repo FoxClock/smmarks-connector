@@ -1,0 +1,41 @@
+# ── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# ── Build / Distribution ─────────────────────────────────────────────────────
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+*.whl
+*.tar.gz
+
+# ── UV / Virtual environments ────────────────────────────────────────────────
+.venv/
+venv/
+.uv/
+
+# ── Testing & Coverage ───────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# ── Type checking ────────────────────────────────────────────────────────────
+.mypy_cache/
+.dmypy.json
+
+# ── IDE ──────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+# ── OS ───────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
