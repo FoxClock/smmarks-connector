@@ -100,21 +100,23 @@ class TestAuthenticate:
 
     def test_bad_status_raises_connection_refused_error(self):
         client = _make_client()
-        with patch.object(client, "request", return_value={"status": "ERROR"}), \
-            pytest.raises(ConnectionRefusedError):
-                client.authenticate()
+        with (
+            patch.object(client, "request", return_value={"status": "ERROR"}),
+            pytest.raises(ConnectionRefusedError),
+        ):
+            client.authenticate()
 
     def test_missing_token_raises_connection_error(self):
         client = _make_client()
         mock = {"status": "OKAY", "sessiontoken": None, "sessionkey": None}
         with patch.object(client, "request", return_value=mock), pytest.raises(ConnectionError):
-                client.authenticate()
+            client.authenticate()
 
     def test_missing_key_raises_connection_error(self):
         client = _make_client()
         mock = {"status": "OKAY", "sessiontoken": "tok", "sessionkey": None}
         with patch.object(client, "request", return_value=mock), pytest.raises(ConnectionError):
-                client.authenticate()
+            client.authenticate()
 
 
 # ---------------------------------------------------------------------------
