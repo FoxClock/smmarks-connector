@@ -6,12 +6,12 @@ Shared helpers for deserialising API response payloads.
 
 from __future__ import annotations
 
-from typing import Any, Type, TypeVar
+from typing import Any, TypeVar
 
 T = TypeVar("T")
 
 
-def parse_list(data: list[dict[str, Any]], cls: Type[T]) -> list[T]:
+def parse_list(data: list[dict[str, Any]], cls: type[T]) -> list[T]:
     """
     Deserialise a list of raw JSON objects into typed dataclass instances.
 

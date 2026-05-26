@@ -135,15 +135,17 @@ class TestArgumentValidation:
     def test_put_student_result_raises_on_non_int_key(self):
         with pytest.raises(ValueError, match="integer"):
             self.client.put_student_result(
-                key="not-an-int", studentkey=1, studentid="S1",
-                taskkey=1, taskname="Task", result="85",
+                key="not-an-int",
+                studentkey=1,
+                studentid="S1",
+                taskkey=1,
+                taskname="Task",
+                result="85",
             )
 
     def test_update_student_class_raises_on_non_int_params(self):
         with pytest.raises(TypeError):
-            self.client.update_student_class(
-                key="x", studentKey=1, studentId="S1", classkey=1
-            )
+            self.client.update_student_class(key="x", studentKey=1, studentId="S1", classkey=1)
 
     def test_delete_student_raises_on_non_int_keys(self):
         with pytest.raises(TypeError):

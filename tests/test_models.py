@@ -23,25 +23,25 @@ from smmarks_connector.models.utils import parse_list
 # ---------------------------------------------------------------------------
 
 BASE_ENVELOPE: dict = {
-    "source":     "test-source",
-    "api":        "1.0",
-    "seconds":    1,
-    "date":       "2026-01-01",
+    "source": "test-source",
+    "api": "1.0",
+    "seconds": 1,
+    "date": "2026-01-01",
     "schoolname": "Test School",
-    "action":     "test",
-    "status":     "OKAY",
+    "action": "test",
+    "status": "OKAY",
 }
 
 
 def _student_data(**overrides) -> dict:
     base = {
-        "key":           1,
-        "studentid":     "S001",
-        "familyname":    "Smith",
-        "givename":      "Alice",
+        "key": 1,
+        "studentid": "S001",
+        "familyname": "Smith",
+        "givename": "Alice",
         "preferredname": "Al",
-        "classkey":      3,
-        "classname":     "10A",
+        "classkey": 3,
+        "classname": "10A",
     }
     base.update(overrides)
     return base
@@ -140,7 +140,13 @@ class TestStudentWithResults:
 
 class TestMarkbookSummary:
     def test_from_json_maps_all_fields(self):
-        data = {"key": 5, "name": "Yr 10 Maths", "owner": "J. Smith", "year": "2026", "course": "MATH10"}
+        data = {
+            "key": 5,
+            "name": "Yr 10 Maths",
+            "owner": "J. Smith",
+            "year": "2026",
+            "course": "MATH10",
+        }
         summary = MarkbookSummary.from_json(data)
         assert summary.key == 5
         assert summary.name == "Yr 10 Maths"
@@ -184,7 +190,7 @@ class TestUserListResponse:
             **BASE_ENVELOPE,
             "list": [
                 {"key": 1, "name": "Alice", "loginid": "alice", "email": "a@x.com"},
-                {"key": 2, "name": "Bob",   "loginid": "bob",   "email": "b@x.com"},
+                {"key": 2, "name": "Bob", "loginid": "bob", "email": "b@x.com"},
             ],
         }
         response = UserListResponse.from_json(data)

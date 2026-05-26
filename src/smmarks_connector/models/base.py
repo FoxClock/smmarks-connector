@@ -40,11 +40,11 @@ class ApiResponseBase:
         :rtype: dict[str, Any]
         """
         return {
-            "source":     data["source"],
-            "api":        data["api"],
-            "seconds":    data["seconds"],
-            "date":       data["date"],
+            "source": data["source"],
+            "api": data["api"],
+            "seconds": data["seconds"],
+            "date": data["date"],
             "schoolname": data["schoolname"],
-            "action":     data["action"],
-            "status":     data["status"],
+            "action": data["action"],
+            "status": data["status"],
         }

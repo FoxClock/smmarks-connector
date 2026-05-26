@@ -97,8 +97,7 @@ class ApiBase:
         """
         if not self._validate_method(method):
             raise ValueError(
-                f"Only valid methods can be used. "
-                f"current: {method!r} | valid: {self.VALID_METHODS}"
+                f"Only valid methods can be used. current: {method!r} | valid: {self.VALID_METHODS}"
             )
 
         # Inject auth params into the query string.

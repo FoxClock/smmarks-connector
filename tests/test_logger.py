@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import logging
 
-import pytest
-
 from smmarks_connector.logger import (
     DEFAULT_REDACT_FIELDS,
     ScrubFilter,
@@ -42,7 +40,7 @@ class TestScrub:
         assert result["method"] == "GET"
 
     def test_all_default_fields_are_redacted(self):
-        data = {field: "value" for field in DEFAULT_REDACT_FIELDS}
+        data = dict.fromkeys(DEFAULT_REDACT_FIELDS, "value")
         result = scrub(data)
         assert all(v == "[REDACTED]" for v in result.values())
 

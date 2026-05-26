@@ -37,7 +37,6 @@ from .models.responses import (
     UserListResponse,
 )
 
-
 # ---------------------------------------------------------------------------
 # Action enum
 # ---------------------------------------------------------------------------
@@ -46,21 +45,21 @@ from .models.responses import (
 class APIAction(Enum):
     """Enumeration of all known SM Marks API action strings."""
 
-    markbookList       = "markbooklist"
-    userList           = "userlist"
-    getMarkbook        = "getmarkbook"
-    getMarkbookAlt     = "getmarkbookalt"
-    getOutcomes        = "getoutcomes"
-    getOutcomesAlt     = "getoutcomesalt"
-    putStudentResult   = "putstudentresult"
-    createStudent      = "createstudent"
-    updateStudent      = "updatestudent"
+    markbookList = "markbooklist"
+    userList = "userlist"
+    getMarkbook = "getmarkbook"
+    getMarkbookAlt = "getmarkbookalt"
+    getOutcomes = "getoutcomes"
+    getOutcomesAlt = "getoutcomesalt"
+    putStudentResult = "putstudentresult"
+    createStudent = "createstudent"
+    updateStudent = "updatestudent"
     updateStudentClass = "updatestudentclass"
-    deleteStudent      = "deletestudent"
-    createClass        = "createclass"
-    scheduleBackup     = "schedulebackup"
-    getBackupURL       = "getbackupurl"
-    createMarkbook     = "createmarkbook"
+    deleteStudent = "deletestudent"
+    createClass = "createclass"
+    scheduleBackup = "schedulebackup"
+    getBackupURL = "getbackupurl"
+    createMarkbook = "createmarkbook"
 
 
 # ---------------------------------------------------------------------------
@@ -99,9 +98,7 @@ class MarkbookApiClient(ApiBase):
         def _decorator(self, *args, **kwargs):
             if self.is_authenticated:
                 return func(self, *args, **kwargs)
-            raise ConnectionError(
-                "SM Marks is not authenticated. Call authenticate() first."
-            )
+            raise ConnectionError("SM Marks is not authenticated. Call authenticate() first.")
 
         return _decorator
 
@@ -113,9 +110,7 @@ class MarkbookApiClient(ApiBase):
         super().__init__(baseUrl, authStrat)
 
         if not api_key:
-            raise ValueError(
-                "API Key is required to interact with the API. None was provided."
-            )
+            raise ValueError("API Key is required to interact with the API. None was provided.")
 
         self.api_key: str = api_key
         self.is_authenticated: bool = False
@@ -137,9 +132,7 @@ class MarkbookApiClient(ApiBase):
         :raises ConnectionError: If the response is missing the session token
             or key.
         """
-        response = self.request(
-            "POST", "authenticate.lc", data=self.authStrategy.get_auth_params()
-        )
+        response = self.request("POST", "authenticate.lc", data=self.authStrategy.get_auth_params())
 
         if response.get("status") != self.SUCCESS:
             raise ConnectionRefusedError(
@@ -150,9 +143,7 @@ class MarkbookApiClient(ApiBase):
         key = response.get("sessionkey")
 
         if not token or not key:
-            raise ConnectionError(
-                "Invalid authentication response: session token or key missing."
-            )
+            raise ConnectionError("Invalid authentication response: session token or key missing.")
 
         self.authStrategy = OngoingAuthStrategy(token, key, self.api_key)
         self.is_authenticated = True
@@ -233,23 +224,17 @@ class MarkbookApiClient(ApiBase):
         :rtype: MarkbookActionResponse
         :raises ValueError: If any key argument is not an integer.
         """
-        if not (
-            isinstance(key, int)
-            and isinstance(studentkey, int)
-            and isinstance(taskkey, int)
-        ):
-            raise ValueError(
-                "Keys must always be of integer type: (key, studentkey, taskkey)."
-            )
+        if not (isinstance(key, int) and isinstance(studentkey, int) and isinstance(taskkey, int)):
+            raise ValueError("Keys must always be of integer type: (key, studentkey, taskkey).")
 
         params: dict[str, Any] = {
-            "action":     APIAction.putStudentResult.value,
-            "key":        key,
+            "action": APIAction.putStudentResult.value,
+            "key": key,
             "studentkey": studentkey,
-            "studentid":  studentid,
-            "taskkey":    taskkey,
-            "taskname":   taskname,
-            "result":     result,
+            "studentid": studentid,
+            "taskkey": taskkey,
+            "taskname": taskname,
+            "result": result,
         }
         response = self.request("GET", "", params=params)
         return MarkbookActionResponse.from_json(response)
@@ -297,13 +282,13 @@ class MarkbookApiClient(ApiBase):
             raise ValueError("create_student is missing a required value.")
 
         params: dict[str, Any] = {
-            "action":   APIAction.createStudent.value,
-            "key":      key,
-            "sid":      studentId,
-            "family":   familyName,
-            "given":    givenName,
+            "action": APIAction.createStudent.value,
+            "key": key,
+            "sid": studentId,
+            "family": familyName,
+            "given": givenName,
             "preffered": preferredName,
-            "gender":   gender,
+            "gender": gender,
             "classkey": classKey,
         }
         response = self.request("GET", "", params=params)
@@ -345,14 +330,14 @@ class MarkbookApiClient(ApiBase):
             raise ValueError("update_student is missing a required value.")
 
         params: dict[str, Any] = {
-            "action":     APIAction.updateStudent.value,
-            "key":        key,
+            "action": APIAction.updateStudent.value,
+            "key": key,
             "studentkey": studentkey,
-            "sid":        studentId,
-            "family":     familyName,
-            "given":      givenName,
-            "preferred":  prefferedName,
-            "gender":     gender,
+            "sid": studentId,
+            "family": familyName,
+            "given": givenName,
+            "preferred": prefferedName,
+            "gender": gender,
         }
         response = self.request("GET", "", params=params)
         return MarkbookActionResponse.from_json(response)
@@ -378,24 +363,20 @@ class MarkbookApiClient(ApiBase):
             all integers.
         """
         if not all(isinstance(p, int) for p in (key, studentKey, classkey)):
-            raise TypeError(
-                "key, studentKey, and classkey must all be integers."
-            )
+            raise TypeError("key, studentKey, and classkey must all be integers.")
 
         params: dict[str, Any] = {
-            "action":     APIAction.updateStudentClass.value,
-            "key":        key,
+            "action": APIAction.updateStudentClass.value,
+            "key": key,
             "studentkey": studentKey,
-            "sid":        studentId,
-            "classkey":   classkey,
+            "sid": studentId,
+            "classkey": classkey,
         }
         response = self.request("GET", "", params=params)
         return MarkbookActionResponse.from_json(response)
 
     @checkAuthenticated
-    def delete_student(
-        self, key: int, studentKey: int, studentId: str
-    ) -> MarkbookActionResponse:
+    def delete_student(self, key: int, studentKey: int, studentId: str) -> MarkbookActionResponse:
         """
         Permanently remove a student from a markbook.
 
@@ -413,10 +394,10 @@ class MarkbookApiClient(ApiBase):
             raise TypeError("key and studentKey must be integers.")
 
         params: dict[str, Any] = {
-            "action":     APIAction.deleteStudent.value,
-            "key":        key,
+            "action": APIAction.deleteStudent.value,
+            "key": key,
             "studentkey": studentKey,
-            "sid":        studentId,
+            "sid": studentId,
         }
         response = self.request("GET", "", params=params)
         return MarkbookActionResponse.from_json(response)
@@ -426,9 +407,7 @@ class MarkbookApiClient(ApiBase):
     # ------------------------------------------------------------------
 
     @checkAuthenticated
-    def create_class(
-        self, key: int, name: str, family: str, given: str
-    ) -> MarkbookActionResponse:
+    def create_class(self, key: int, name: str, family: str, given: str) -> MarkbookActionResponse:
         """
         Create a new class within an existing markbook.
 
@@ -445,10 +424,10 @@ class MarkbookApiClient(ApiBase):
         """
         params: dict[str, Any] = {
             "action": APIAction.createClass.value,
-            "key":    key,
-            "name":   name,
+            "key": key,
+            "name": name,
             "family": family,
-            "given":  given,
+            "given": given,
         }
         response = self.request("GET", "", params=params)
         return MarkbookActionResponse.from_json(response)
@@ -476,7 +455,7 @@ class MarkbookApiClient(ApiBase):
         # Compact JSON (no whitespace) reduces payload size.
         form_data: dict[str, str] = {
             "apiaction": APIAction.createMarkbook.value,
-            "jsondata":  json.dumps(asdict(markbook), separators=(",", ":")),
+            "jsondata": json.dumps(asdict(markbook), separators=(",", ":")),
         }
         form_data.update(self.authStrategy.get_auth_params())
 
